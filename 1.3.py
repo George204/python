@@ -1,8 +1,5 @@
-import time as t
-import os
-print("cześć")
-t.sleep(2)
-os.system("cls")
-polep = 5.875**2*6
-obj = 5.875**3
-print(round(polep,2),"\n",round(obj,2))
+import msvcrt as c,os 
+print("cześć\nnaciśnij dowolny klawisz")
+c.getch(),os.system("cls")
+polep,obj = 5.875**2*6,5.875**3
+print(f"pole pow.:{round(polep,2)}\nobjętość:{round(obj,2)}")
