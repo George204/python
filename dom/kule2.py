@@ -2,21 +2,24 @@ import pygame as pg
 import sys
 import random as r
 import time
-
+import math as m
 pg.init()
 
-res = (1600,900)
+res = (1010,1010)
 screen = pg.display.set_mode(res)
-bariera = (500,500)
+bariera = (1000,1000)
 nkuli = 4
 kule = []
 mvx = 0.01
 mvy = 0.01
 FPS = 60
+grav = 0.000981
 def ktp(mytuple):
     x , y = mytuple
     ret = ((res[0]/2)+bariera[0]*x,(res[1]/2)+bariera[1]*y)
     return ret
+def ktps(x):
+    return ktp((x,0))[0]
 
 class kula:
     def __init__(self, vx, vy , x, y, r, colour):
@@ -31,7 +34,7 @@ bx = (res[0]/3-bariera[0]/3)/res[0]
 by = (res[1]/3-bariera[1]/3)/res[1]
 
 for i in range(nkuli):
-    k = kula(r.uniform(mvx*-1,mvx),r.uniform(mvy*-1,mvy),r.uniform(-bx,bx),r.uniform(-by,by),r.uniform(10,50),(r.randint(0,255),r.randint(0,255),r.randint(0,255)))
+    k = kula(r.uniform(mvx*-1,mvx),r.uniform(mvy*-1,mvy),r.uniform(-bx,bx),r.uniform(-by,by),r.randint(10,50),(r.randint(0,255),r.randint(0,255),r.randint(0,255)))
     kule.append(k)
 clock = pg.time.Clock()
 czas = time.time()    
@@ -56,6 +59,7 @@ while True:
     for k in kule:
         k.x += k.vx
         k.y += k.vy
+        # k.vy += grav
         if ktp((k.x,k.y))[0] + k.r > res[0]/2+bariera[0]/2:
             k.vx = -abs(k.vx)
         if ktp((k.x,k.y))[0]-k.r < res[0]/2-bariera[0]/2:
@@ -71,5 +75,18 @@ while True:
                     k.vx, i.vx = i.vx, k.vx
                     k.vy, i.vy = i.vy, k.vy
                     
+                    
+                    print(k.x,i.x)
+                    # print(ktps(k.x),ktps(i.x))
+                    print(ktps(k.x)-ktps(i.x))
+                    x = abs(k.x) - abs(i.x)
+                    y = abs(k.y) - abs(i.y) 
+                    print(k.r+i.r,m.sqrt((ktps(k.x)-ktps(i.x))**2+(ktps(k.y)-ktps(i.y))**2),m.sqrt(x**2+y**2))
+                    print("\n")
+                    
+                    # print(kdkdxzxc12kdccck.x-i.x," ",k.y-i.y)
+                    # print(a)
+ 
+            
     pg.display.flip()
 pg.quit()
